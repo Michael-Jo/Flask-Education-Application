@@ -1,0 +1,56 @@
+import mysql.connector
+from flask import current_app
+
+class ProdukModel:
+    def __init__(self):
+        self.config = current_app.config
+
+    def connect(self):
+        return mysql.connector.connect(
+            host=self.config["MYSQL_HOST"],
+            database=self.config["MYSQL_DATABASE"],
+            user=self.config["MYSQL_USER"],
+            password=self.config["MYSQL_PASSWORD"]
+        )
+
+    def insert_produk(self, nama):
+        db = self.connect()
+        cursor = db.cursor()
+        cursor.execute("INSERT INTO produk (id, nama) VALUES (%s, %s)", ('', nama))
+        db.commit()
+        cursor.close()
+        db.close()
+
+    def get_all_produk(self):
+        db = self.connect()
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM produk")
+        data = cursor.fetchall()
+        cursor.close()
+        db.close()
+        return data
+
+    def delete_produk(self, id):
+        db = self.connect()
+        cursor = db.cursor()
+        cursor.execute("DELETE FROM produk WHERE id = %s", (id,))
+        db.commit()
+        cursor.close()
+        db.close()
+
+    def get_produk_by_id(self, id):
+        db = self.connect()
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM produk WHERE id = %s", (id,))
+        value = cursor.fetchone()
+        cursor.close()
+        db.close()
+        return value
+
+    def update_produk(self, id, nama):
+        db = self.connect()
+        cursor = db.cursor()
+        cursor.execute("UPDATE produk SET nama = %s WHERE id = %s", (nama, id))
+        db.commit()
+        cursor.close()
+        db.close()
