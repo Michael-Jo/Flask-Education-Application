@@ -1,6 +1,10 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy # Ini
 from config import Config
+
+# Ini error???
+#     from flask_sqlalchemy import SQLAlchemy
+# ModuleNotFoundError: No module named 'flask_sqlalchemy'
 
 db = SQLAlchemy()
 
