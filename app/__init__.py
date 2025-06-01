@@ -16,7 +16,7 @@ def create_app():
         if not models.Category.query.first():
             db.session.add_all([
                 models.Category(name="transportasi"),
-                models.Category(name="pangan")
+                models.Category(name="pangan"),
                 models.Category(name="energi")
             ])
             db.session.commit()
